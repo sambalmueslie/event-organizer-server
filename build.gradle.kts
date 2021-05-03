@@ -46,6 +46,7 @@ dependencies {
     testImplementation("org.testcontainers:testcontainers")
     implementation("io.micronaut:micronaut-validation")
     implementation("io.micronaut.kotlin:micronaut-kotlin-extension-functions")
+    implementation("io.micronaut.kotlin:micronaut-kotlin-runtime")
     runtimeOnly("ch.qos.logback:logback-classic")
     runtimeOnly("com.fasterxml.jackson.module:jackson-module-kotlin")
 }
