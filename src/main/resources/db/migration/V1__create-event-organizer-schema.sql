@@ -11,16 +11,16 @@ $$ language 'plpgsql';
 CREATE SEQUENCE player_seq;
 CREATE TABLE player
 (
-    id        bigint       not null primary key default nextval('player_seq'::regclass),
+    id         bigint       not null primary key default nextval('player_seq'::regclass),
 
-    name      varchar(255) NOT NULL,
-    email     varchar(255) NOT NULL UNIQUE,
+    name       varchar(255) NOT NULL,
+    email      varchar(255) NOT NULL UNIQUE,
 
-    steamId   varchar(255),
-    discordId varchar(255),
+    steam_id   varchar(255),
+    discord_id varchar(255),
 
-    created   timestamp    NOT NULL             DEFAULT NOW(),
-    modified  timestamp
+    created    timestamp                         DEFAULT NOW(),
+    modified   timestamp
 );
 
 CREATE TRIGGER player_modified
@@ -34,15 +34,15 @@ EXECUTE PROCEDURE update_modified_column();
 CREATE SEQUENCE clan_seq;
 CREATE TABLE clan
 (
-    id        bigint       not null primary key default nextval('clan_seq'::regclass),
+    id         bigint       not null primary key default nextval('clan_seq'::regclass),
 
-    name      varchar(255) NOT NULL UNIQUE,
-    tag       varchar(255) NOT NULL,
+    name       varchar(255) NOT NULL UNIQUE,
+    tag        varchar(255) NOT NULL,
 
-    discordId varchar(255),
+    discord_id varchar(255),
 
-    created   timestamp    NOT NULL             DEFAULT NOW(),
-    modified  timestamp
+    created    timestamp                         DEFAULT NOW(),
+    modified   timestamp
 );
 
 CREATE TRIGGER clan_modified
@@ -54,12 +54,12 @@ EXECUTE PROCEDURE update_modified_column();
 /* clan member */
 CREATE TABLE clan_member
 (
-    clanId   bigint not null,
-    playerId bigint not null,
+    clan_id   bigint not null,
+    player_id bigint not null,
 
-    CONSTRAINT fk_clan FOREIGN KEY (clanId)
+    CONSTRAINT fk_clan FOREIGN KEY (clan_id)
         REFERENCES clan (id) MATCH SIMPLE,
-    CONSTRAINT fk_player FOREIGN KEY (playerId)
+    CONSTRAINT fk_player FOREIGN KEY (player_id)
         REFERENCES player (id) MATCH SIMPLE
 );
 
