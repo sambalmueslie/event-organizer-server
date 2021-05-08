@@ -4,6 +4,8 @@ plugins {
     id("com.github.johnrengelman.shadow") version "6.1.0"
     id("io.micronaut.application") version "1.5.0"
     id("org.jetbrains.kotlin.plugin.allopen") version "1.5.0"
+    id("org.sonarqube") version "3.2.0"
+    jacoco
 }
 
 version = "0.1"
@@ -59,6 +61,33 @@ application {
 }
 java {
     sourceCompatibility = JavaVersion.toVersion("14")
+}
+
+
+jacoco {
+    toolVersion = "0.8.7"
+}
+
+tasks.test {
+    useJUnitPlatform()
+    finalizedBy(tasks.jacocoTestReport)
+}
+
+sonarqube {
+    properties {
+        property("sonar.projectKey", "sambalmueslie_event-organizer")
+        property("sonar.organization", "sambalmueslie")
+        property("sonar.host.url", "https://sonarcloud.io")
+        property("sonar.sourceEncoding", "UTF-8")
+        property("sonar.jacoco.reportPath", "${project.buildDir}/reports/jacoco/test")
+    }
+}
+
+tasks.jacocoTestReport {
+    reports {
+        xml.setEnabled(true)
+        csv.setEnabled(false)
+    }
 }
 
 allOpen {
