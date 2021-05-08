@@ -10,4 +10,6 @@ data class TeamChangeRequest(
     val clanId: Long,
     @JsonProperty
     val nationId: Long,
+    @JsonProperty
+    val eventId: Long,
 ) : CrudObjectChangeRequest

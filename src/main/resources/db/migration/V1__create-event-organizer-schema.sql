@@ -195,6 +195,7 @@ CREATE TABLE team
 
     clan_id   bigint NOT NULL,
     nation_id bigint NOT NULL,
+    event_id  bigint NOT NULL,
 
     created   timestamp                   DEFAULT NOW(),
     modified  timestamp,
@@ -202,7 +203,9 @@ CREATE TABLE team
     CONSTRAINT fk_team_clan FOREIGN KEY (clan_id)
         REFERENCES clan (id) MATCH SIMPLE,
     CONSTRAINT fk_team_nation FOREIGN KEY (nation_id)
-        REFERENCES game_nation (id) MATCH SIMPLE
+        REFERENCES game_nation (id) MATCH SIMPLE,
+    CONSTRAINT fk_team_event FOREIGN KEY (event_id)
+        REFERENCES event (id) MATCH SIMPLE
 );
 
 CREATE TRIGGER team_modified

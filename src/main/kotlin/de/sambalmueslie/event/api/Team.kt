@@ -11,5 +11,7 @@ data class Team(
     @JsonProperty
     val clanId: Long,
     @JsonProperty
-    val nationId: Long
+    val nationId: Long,
+    @JsonProperty
+    val eventId: Long
 ) : CrudObject

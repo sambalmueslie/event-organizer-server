@@ -12,19 +12,22 @@ data class TeamData(
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     var id: Long = 0,
     @Column
-    var clanId: Long,
+    var clanId: Long = -1,
     @Column
-    var nationId: Long
+    var nationId: Long = -1,
+    @Column
+    var eventId: Long = -1
 ) : CrudEntity<Team, TeamChangeRequest> {
-    override fun convert() = Team(id, clanId, nationId)
+    override fun convert() = Team(id, clanId, nationId, eventId)
 
     companion object {
-        fun convert(request: TeamChangeRequest) = TeamData(0, request.clanId, request.nationId)
+        fun convert(request: TeamChangeRequest) = TeamData(0, request.clanId, request.nationId, request.eventId)
     }
 
     override fun update(request: TeamChangeRequest) {
         clanId = request.clanId
         nationId = request.nationId
+        eventId = request.eventId
     }
 
     @Column
