@@ -4,15 +4,12 @@ import de.sambalmueslie.clan.api.Clan
 import de.sambalmueslie.clan.api.ClanChangeRequest
 import de.sambalmueslie.common.CrudEntity
 import java.time.ZonedDateTime
-import javax.persistence.Column
-import javax.persistence.Entity
-import javax.persistence.Id
-import javax.persistence.Table
+import javax.persistence.*
 
 @Entity(name = "Clan")
 @Table(name = "clan")
 data class ClanData(
-    @Id
+    @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     var id: Long = 0,
     @Column(nullable = false, unique = true)
     var name: String = "",

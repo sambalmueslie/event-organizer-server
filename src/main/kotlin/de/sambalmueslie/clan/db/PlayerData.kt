@@ -4,15 +4,12 @@ import de.sambalmueslie.clan.api.Player
 import de.sambalmueslie.clan.api.PlayerChangeRequest
 import de.sambalmueslie.common.CrudEntity
 import java.time.ZonedDateTime
-import javax.persistence.Column
-import javax.persistence.Entity
-import javax.persistence.Id
-import javax.persistence.Table
+import javax.persistence.*
 
 @Entity(name = "Player")
 @Table(name = "player")
 data class PlayerData(
-    @Id
+    @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     var id: Long = 0,
     @Column(nullable = false)
     var name: String = "",

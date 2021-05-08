@@ -63,17 +63,85 @@ CREATE TABLE clan_member
         REFERENCES player (id) MATCH SIMPLE
 );
 
-/* event info */
-CREATE SEQUENCE event_info_seq;
-CREATE TABLE event_info
+/* map */
+CREATE SEQUENCE map_seq;
+CREATE TABLE map
 (
-    id       bigint       not null primary key default nextval('event_info_seq'::regclass),
-    name     varchar(255) NOT NULL,
-    enabled  boolean      NOT NULL,
+    id       bigint       not null primary key default nextval('map_seq'::regclass),
+    name     varchar(255) NOT NULL UNIQUE,
 
-    created  TIMESTAMP WITHOUT TIME ZONE,
-    modified TIMESTAMP WITHOUT TIME ZONE,
-
-    CONSTRAINT cache_settings_pk UNIQUE (id),
-    CONSTRAINT cache_settings_name UNIQUE (name)
+    created  timestamp                         DEFAULT NOW(),
+    modified timestamp
 );
+
+CREATE TRIGGER map_modified
+    BEFORE UPDATE
+    ON map
+    FOR EACH ROW
+EXECUTE PROCEDURE update_modified_column();
+
+/* nation */
+CREATE SEQUENCE nation_seq;
+CREATE TABLE nation
+(
+    id       bigint       not null primary key default nextval('nation_seq'::regclass),
+    name     varchar(255) NOT NULL UNIQUE,
+
+    created  timestamp                         DEFAULT NOW(),
+    modified timestamp
+);
+
+CREATE TRIGGER nation_modified
+    BEFORE UPDATE
+    ON nation
+    FOR EACH ROW
+EXECUTE PROCEDURE update_modified_column();
+
+/* event */
+CREATE SEQUENCE event_seq;
+CREATE TABLE event
+(
+    id          bigint                      not null primary key default nextval('event_seq'::regclass),
+    title       varchar(255)                NOT NULL,
+    description text                        NOT NULL,
+    timestamp   TIMESTAMP WITHOUT TIME ZONE NOT NULL,
+    rounds      int                         NOT NULL,
+
+    map_id      bigint                      NOT NULL,
+
+    created     timestamp                                        DEFAULT NOW(),
+    modified    timestamp,
+
+    CONSTRAINT fk_event_map FOREIGN KEY (map_id)
+        REFERENCES map (id) MATCH SIMPLE
+);
+
+CREATE TRIGGER event_modified
+    BEFORE UPDATE
+    ON event
+    FOR EACH ROW
+EXECUTE PROCEDURE update_modified_column();
+
+/* team */
+CREATE SEQUENCE team_seq;
+CREATE TABLE team
+(
+    id          bigint                      not null primary key default nextval('team_seq'::regclass),
+
+    clan_id     bigint                      NOT NULL,
+    nation_id   bigint                      NOT NULL,
+
+    created     timestamp                                        DEFAULT NOW(),
+    modified    timestamp,
+
+    CONSTRAINT fk_team_clan FOREIGN KEY (clan_id)
+        REFERENCES clan (id) MATCH SIMPLE,
+    CONSTRAINT fk_team_nation FOREIGN KEY (nation_id)
+        REFERENCES nation (id) MATCH SIMPLE
+);
+
+CREATE TRIGGER team_modified
+    BEFORE UPDATE
+    ON team
+    FOR EACH ROW
+EXECUTE PROCEDURE update_modified_column();
