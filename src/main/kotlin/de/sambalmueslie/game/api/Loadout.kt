@@ -1,7 +1,15 @@
 package de.sambalmueslie.game.api
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties
+import com.fasterxml.jackson.annotation.JsonProperty
+import de.sambalmueslie.common.CrudObject
+
+@JsonIgnoreProperties(ignoreUnknown = true)
 data class Loadout(
-    val id: Long,
+    @JsonProperty
+    override val id: Long,
+    @JsonProperty
     val text: String,
+    @JsonProperty
     val level: Int
-)
+) : CrudObject

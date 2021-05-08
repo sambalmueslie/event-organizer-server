@@ -63,39 +63,104 @@ CREATE TABLE clan_member
         REFERENCES player (id) MATCH SIMPLE
 );
 
-/* map */
-CREATE SEQUENCE map_seq;
-CREATE TABLE map
+/* loadout */
+CREATE SEQUENCE game_loadout_seq;
+CREATE TABLE game_loadout
 (
-    id       bigint       not null primary key default nextval('map_seq'::regclass),
+    id       bigint       not null primary key default nextval('game_loadout_seq'::regclass),
+    text     varchar(255) NOT NULL UNIQUE,
+    level    int          NOT NULL,
+
+    created  timestamp                         DEFAULT NOW(),
+    modified timestamp
+);
+
+CREATE TRIGGER game_loadout_modified
+    BEFORE UPDATE
+    ON game_loadout
+    FOR EACH ROW
+EXECUTE PROCEDURE update_modified_column();
+
+/* map */
+CREATE SEQUENCE game_map_seq;
+CREATE TABLE game_map
+(
+    id       bigint       not null primary key default nextval('game_map_seq'::regclass),
     name     varchar(255) NOT NULL UNIQUE,
 
     created  timestamp                         DEFAULT NOW(),
     modified timestamp
 );
 
-CREATE TRIGGER map_modified
+CREATE TRIGGER game_map_modified
     BEFORE UPDATE
-    ON map
+    ON game_map
     FOR EACH ROW
 EXECUTE PROCEDURE update_modified_column();
 
 /* nation */
-CREATE SEQUENCE nation_seq;
-CREATE TABLE nation
+CREATE SEQUENCE game_nation_seq;
+CREATE TABLE game_nation
 (
-    id       bigint       not null primary key default nextval('nation_seq'::regclass),
+    id       bigint       not null primary key default nextval('game_nation_seq'::regclass),
     name     varchar(255) NOT NULL UNIQUE,
 
     created  timestamp                         DEFAULT NOW(),
     modified timestamp
 );
 
-CREATE TRIGGER nation_modified
+CREATE TRIGGER game_nation_modified
     BEFORE UPDATE
-    ON nation
+    ON game_nation
     FOR EACH ROW
 EXECUTE PROCEDURE update_modified_column();
+
+/* unit */
+CREATE SEQUENCE game_unit_seq;
+CREATE TABLE game_unit
+(
+    id        bigint       not null primary key default nextval('game_unit_seq'::regclass),
+    type      varchar(255) NOT NULL,
+    size      int          NOT NULL,
+
+    nation_id bigint       not null,
+
+    created   timestamp                         DEFAULT NOW(),
+    modified  timestamp,
+
+    CONSTRAINT fk_unit_nation FOREIGN KEY (nation_id)
+        REFERENCES game_nation (id) MATCH SIMPLE
+);
+
+CREATE TRIGGER game_unit_modified
+    BEFORE UPDATE
+    ON game_unit
+    FOR EACH ROW
+EXECUTE PROCEDURE update_modified_column();
+
+/* unit slot */
+CREATE SEQUENCE game_unit_slot_seq;
+CREATE TABLE game_unit_slot
+(
+    id       bigint       not null primary key default nextval('game_unit_seq'::regclass),
+    text     varchar(255) NOT NULL,
+    leader   boolean      NOT NULL,
+
+    unit_id  bigint       NOT NULL,
+
+    created  timestamp                         DEFAULT NOW(),
+    modified timestamp,
+
+    CONSTRAINT fk_unit_slot_unit FOREIGN KEY (unit_id)
+        REFERENCES game_unit (id) MATCH SIMPLE
+);
+
+CREATE TRIGGER game_unit_slot_modified
+    BEFORE UPDATE
+    ON game_unit_slot
+    FOR EACH ROW
+EXECUTE PROCEDURE update_modified_column();
+
 
 /* event */
 CREATE SEQUENCE event_seq;
@@ -113,7 +178,7 @@ CREATE TABLE event
     modified    timestamp,
 
     CONSTRAINT fk_event_map FOREIGN KEY (map_id)
-        REFERENCES map (id) MATCH SIMPLE
+        REFERENCES game_map (id) MATCH SIMPLE
 );
 
 CREATE TRIGGER event_modified
@@ -126,18 +191,18 @@ EXECUTE PROCEDURE update_modified_column();
 CREATE SEQUENCE team_seq;
 CREATE TABLE team
 (
-    id          bigint                      not null primary key default nextval('team_seq'::regclass),
+    id        bigint not null primary key default nextval('team_seq'::regclass),
 
-    clan_id     bigint                      NOT NULL,
-    nation_id   bigint                      NOT NULL,
+    clan_id   bigint NOT NULL,
+    nation_id bigint NOT NULL,
 
-    created     timestamp                                        DEFAULT NOW(),
-    modified    timestamp,
+    created   timestamp                   DEFAULT NOW(),
+    modified  timestamp,
 
     CONSTRAINT fk_team_clan FOREIGN KEY (clan_id)
         REFERENCES clan (id) MATCH SIMPLE,
     CONSTRAINT fk_team_nation FOREIGN KEY (nation_id)
-        REFERENCES nation (id) MATCH SIMPLE
+        REFERENCES game_nation (id) MATCH SIMPLE
 );
 
 CREATE TRIGGER team_modified

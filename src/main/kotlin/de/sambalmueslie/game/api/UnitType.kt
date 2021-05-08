@@ -1,6 +1,6 @@
 package de.sambalmueslie.game.api
 
-enum class SquadType {
+enum class UnitType {
     COMMANDER,
     INFANTERIE,
     ARMOR,

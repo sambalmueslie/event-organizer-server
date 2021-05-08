@@ -2,12 +2,12 @@ package de.sambalmueslie.game.api
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties
 import com.fasterxml.jackson.annotation.JsonProperty
-import de.sambalmueslie.common.CrudObject
+import de.sambalmueslie.common.CrudObjectChangeRequest
 
 @JsonIgnoreProperties(ignoreUnknown = true)
-data class Nation(
+data class LoadoutChangeRequest(
     @JsonProperty
-    override val id: Long,
+    val text: String,
     @JsonProperty
-    val name: String
-): CrudObject
+    val level: Int
+) : CrudObjectChangeRequest
