@@ -38,7 +38,7 @@ internal class MapServiceTest {
         val update = MapChangeRequest("NewName")
         map = service.update(auth, map!!.id, update)
 
-        assertEquals(Player(map!!.id, update.name), map)
+        assertEquals(Map(map!!.id, update.name), map)
 
         service.delete(auth, map.id)
 
