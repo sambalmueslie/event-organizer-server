@@ -21,7 +21,7 @@ micronaut {
     testRuntime("junit5")
     processing {
         incremental(true)
-        annotations("de.sambalmueslie.*")
+        annotations("de.sambalmueslie.eventorg.*")
     }
 }
 
@@ -85,8 +85,8 @@ sonarqube {
 
 tasks.jacocoTestReport {
     reports {
-        xml.setEnabled(true)
-        csv.setEnabled(false)
+        xml.isEnabled = true
+        csv.isEnabled = false
     }
 }
 
