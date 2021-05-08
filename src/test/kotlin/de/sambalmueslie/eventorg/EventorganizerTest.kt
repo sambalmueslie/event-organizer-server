@@ -1,4 +1,4 @@
-package de.sambalmueslie
+package de.sambalmueslie.eventorg
 
 import io.micronaut.runtime.EmbeddedApplication
 import io.micronaut.test.extensions.junit5.annotation.MicronautTest

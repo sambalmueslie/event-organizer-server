@@ -2,22 +2,26 @@ micronaut:
   application:
     name: eventorganizer
   security:
-    enabled: false
-    authentication: bearer
-    token:
-      jwt:
-        signatures:
-          secret:
-            generator:
-              secret: '"${JWT_GENERATOR_SIGNATURE_SECRET:pleaseChangeThisSecretForANewOne}"'
+    enabled: true
+    intercept-url-map:
+      - pattern: /**
+        access:
+          - isAuthenticated()
+    endpoints:
+      login:
+        enabled: false
+      oauth:
+        enabled: false
     oauth2:
       clients:
-        default:
-          client-id: ${OAUTH_CLIENT_ID}
-          client-secret: ${OAUTH_CLIENT_SECRET}
-          openid:
-            issuer: ${OAUTH_ISSUER}
-
+        keycloak:
+          client-id: ""
+          client-secret: ""
+          client-credentials:
+            service-id-regex: "keycloak"
+          token:
+            url: ""
+            auth-method: client_secret_basic
   caches:
     my-cache:
       maximumSize: 20

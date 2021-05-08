@@ -1,9 +1,11 @@
 plugins {
-    id("org.jetbrains.kotlin.jvm") version "1.4.32"
-    id("org.jetbrains.kotlin.kapt") version "1.4.32"
+    id("org.jetbrains.kotlin.jvm") version "1.5.0"
+    id("org.jetbrains.kotlin.kapt") version "1.5.0"
     id("com.github.johnrengelman.shadow") version "6.1.0"
     id("io.micronaut.application") version "1.5.0"
-    id("org.jetbrains.kotlin.plugin.allopen") version "1.4.32"
+    id("org.jetbrains.kotlin.plugin.allopen") version "1.5.0"
+    id("org.sonarqube") version "3.2.0"
+    jacoco
 }
 
 version = "0.1"
@@ -19,7 +21,7 @@ micronaut {
     testRuntime("junit5")
     processing {
         incremental(true)
-        annotations("de.sambalmueslie.*")
+        annotations("de.sambalmueslie.eventorg.*")
     }
 }
 
@@ -46,8 +48,11 @@ dependencies {
     testImplementation("org.testcontainers:testcontainers")
     implementation("io.micronaut:micronaut-validation")
     implementation("io.micronaut.kotlin:micronaut-kotlin-extension-functions")
+    implementation("io.micronaut.kotlin:micronaut-kotlin-runtime")
     runtimeOnly("ch.qos.logback:logback-classic")
     runtimeOnly("com.fasterxml.jackson.module:jackson-module-kotlin")
+
+    testImplementation("io.mockk:mockk:1.11.0")
 }
 
 
@@ -56,6 +61,33 @@ application {
 }
 java {
     sourceCompatibility = JavaVersion.toVersion("14")
+}
+
+
+jacoco {
+    toolVersion = "0.8.7"
+}
+
+tasks.test {
+    useJUnitPlatform()
+    finalizedBy(tasks.jacocoTestReport)
+}
+
+sonarqube {
+    properties {
+        property("sonar.projectKey", "sambalmueslie_event-organizer")
+        property("sonar.organization", "sambalmueslie")
+        property("sonar.host.url", "https://sonarcloud.io")
+        property("sonar.sourceEncoding", "UTF-8")
+        property("sonar.jacoco.reportPath", "${project.buildDir}/reports/jacoco/test")
+    }
+}
+
+tasks.jacocoTestReport {
+    reports {
+        xml.isEnabled = true
+        csv.isEnabled = false
+    }
 }
 
 allOpen {

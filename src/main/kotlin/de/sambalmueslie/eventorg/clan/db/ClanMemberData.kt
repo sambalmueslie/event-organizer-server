@@ -1,4 +1,4 @@
-package de.sambalmueslie.clan.db
+package de.sambalmueslie.eventorg.clan.db
 
 import javax.persistence.Column
 import javax.persistence.Entity
