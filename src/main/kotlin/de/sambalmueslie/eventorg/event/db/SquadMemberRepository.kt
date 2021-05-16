@@ -1,4 +1,4 @@
-package de.sambalmueslie.eventorg.clan.db
+package de.sambalmueslie.eventorg.event.db
 
 import io.micronaut.data.annotation.Repository
 import io.micronaut.data.jdbc.annotation.JdbcRepository
@@ -7,6 +7,5 @@ import io.micronaut.data.repository.PageableRepository
 
 @Repository
 @JdbcRepository(dialect = Dialect.POSTGRES)
-interface ClanRepository : PageableRepository<ClanData, Long> {
-    fun findByDiscordId(discordId: String): ClanData?
+interface SquadMemberRepository : PageableRepository<SquadMemberData, Long> {
 }

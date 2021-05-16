@@ -13,6 +13,11 @@ abstract class BaseCrudService<T : CrudObject, R : CrudObjectChangeRequest, D : 
 ) : CrudAPI<T, R> {
 
     override fun create(auth: Authentication, request: R): T? {
+        // TODO validate request
+        return create(request)
+    }
+
+    fun create(request: R): T {
         logger.debug("Create $request")
         // TODO validate request
         val data = convert(request)

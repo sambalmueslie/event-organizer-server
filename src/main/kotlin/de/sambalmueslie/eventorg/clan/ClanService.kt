@@ -18,5 +18,6 @@ class ClanService(private val repo: ClanRepository) : BaseCrudService<Clan, Clan
 
     override fun convert(request: ClanChangeRequest) = ClanData.convert(request)
 
+    fun findByDiscordId(discordId: String): Clan? = repo.findByDiscordId(discordId)?.convert()
 
 }

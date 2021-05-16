@@ -213,3 +213,51 @@ CREATE TRIGGER team_modified
     ON team
     FOR EACH ROW
 EXECUTE PROCEDURE update_modified_column();
+
+/* squad */
+CREATE SEQUENCE squad_seq;
+CREATE TABLE squad
+(
+    id       bigint not null primary key default nextval('squad_seq'::regclass),
+
+    team_id  bigint NOT NULL,
+    unit_id  bigint NOT NULL,
+
+    created  timestamp                   DEFAULT NOW(),
+    modified timestamp,
+
+    CONSTRAINT fk_squad_team FOREIGN KEY (team_id)
+        REFERENCES team (id) MATCH SIMPLE,
+    CONSTRAINT fk_squad_unit FOREIGN KEY (unit_id)
+        REFERENCES game_unit (id) MATCH SIMPLE
+);
+
+CREATE TRIGGER squad_modified
+    BEFORE UPDATE
+    ON squad
+    FOR EACH ROW
+EXECUTE PROCEDURE update_modified_column();
+
+/* squad member */
+CREATE SEQUENCE squad_member_seq;
+CREATE TABLE squad_member
+(
+    id           bigint not null primary key default nextval('squad_member_seq'::regclass),
+
+    player_id    bigint NOT NULL,
+    unit_slot_id bigint NOT NULL,
+
+    created      timestamp                   DEFAULT NOW(),
+    modified     timestamp,
+
+    CONSTRAINT fk_squad_member_player FOREIGN KEY (player_id)
+        REFERENCES player (id) MATCH SIMPLE,
+    CONSTRAINT fk_squad_member_unit_slot FOREIGN KEY (unit_slot_id)
+        REFERENCES game_unit_slot (id) MATCH SIMPLE
+);
+
+CREATE TRIGGER squad_member_modified
+    BEFORE UPDATE
+    ON squad_member
+    FOR EACH ROW
+EXECUTE PROCEDURE update_modified_column();
