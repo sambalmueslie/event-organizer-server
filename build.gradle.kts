@@ -4,7 +4,7 @@ plugins {
     id("com.github.johnrengelman.shadow") version "6.1.0"
     id("io.micronaut.application") version "1.5.0"
     id("org.jetbrains.kotlin.plugin.allopen") version "1.5.10"
-    id("org.sonarqube") version "3.2.0"
+    id("org.sonarqube") version "3.3"
     jacoco
 }
 
