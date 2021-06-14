@@ -26,6 +26,10 @@ micronaut:
     my-cache:
       maximumSize: 20
 
+jackson:
+  bean-introspection-module: true
+  serialization-inclusion: always
+
 datasources:
   default:
     url: jdbc:postgresql://localhost:5432/eventorg

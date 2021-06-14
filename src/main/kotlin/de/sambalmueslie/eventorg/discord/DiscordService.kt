@@ -7,6 +7,7 @@ import de.sambalmueslie.eventorg.config.DiscordConfig
 import de.sambalmueslie.eventorg.discord.action.CreateMessageAction
 import de.sambalmueslie.eventorg.discord.action.HelpMessageAction
 import de.sambalmueslie.eventorg.discord.action.SetupMessageAction
+import de.sambalmueslie.eventorg.event.EventService
 import discord4j.core.DiscordClient
 import discord4j.core.event.domain.guild.GuildEvent
 import discord4j.core.event.domain.message.MessageCreateEvent
@@ -22,6 +23,7 @@ import org.slf4j.LoggerFactory
 class DiscordService(
     clanService: ClanService,
     playerService: PlayerService,
+    eventService: EventService,
     config: DiscordConfig
 ) {
 
@@ -32,7 +34,7 @@ class DiscordService(
     private val messageActions = listOf(
         HelpMessageAction(),
         SetupMessageAction(clanService, playerService, config),
-        CreateMessageAction(config)
+        CreateMessageAction(clanService, eventService, config)
     )
 
     init {
