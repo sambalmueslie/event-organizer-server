@@ -1,10 +1,10 @@
 plugins {
-    id("org.jetbrains.kotlin.jvm") version "1.5.0"
-    id("org.jetbrains.kotlin.kapt") version "1.5.0"
+    id("org.jetbrains.kotlin.jvm") version "1.5.10"
+    id("org.jetbrains.kotlin.kapt") version "1.5.10"
     id("com.github.johnrengelman.shadow") version "6.1.0"
-    id("io.micronaut.application") version "1.5.0"
-    id("org.jetbrains.kotlin.plugin.allopen") version "1.5.0"
-    id("org.sonarqube") version "3.2.0"
+    id("io.micronaut.application") version "1.5.1"
+    id("org.jetbrains.kotlin.plugin.allopen") version "1.5.10"
+    id("org.sonarqube") version "3.3"
     jacoco
 }
 
@@ -55,8 +55,8 @@ dependencies {
     testImplementation("io.mockk:mockk:1.11.0")
 
     implementation("com.discord4j:discord4j-core:3.1.5")
-    implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.5.0")
-    implementation("org.jetbrains.kotlinx:kotlinx-coroutines-reactor:1.5.0")
+    implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.5.0-native-mt")
+    implementation("org.jetbrains.kotlinx:kotlinx-coroutines-reactor:1.5.0-native-mt")
 }
 
 
