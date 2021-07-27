@@ -1,27 +1,27 @@
 micronaut:
   application:
     name: eventorganizer
+  server:
+    cors:
+      enabled: true
   security:
+    authentication: bearer
     enabled: true
-    intercept-url-map:
-      - pattern: /**
-        access:
-          - isAuthenticated()
+    ip-patterns: []
     endpoints:
       login:
         enabled: false
       oauth:
         enabled: false
-    oauth2:
-      clients:
-        keycloak:
-          client-id: ""
-          client-secret: ""
-          client-credentials:
-            service-id-regex: "keycloak"
-          token:
-            url: ""
-            auth-method: client_secret_basic
+    token:
+      enabled: true
+      roles-name: "roles"
+      jwt:
+        enabled: true
+        signatures:
+          jwks:
+            auth0:
+              url: "https://eventorg.eu.auth0.com//.well-known/jwks.json"
   caches:
     my-cache:
       maximumSize: 20

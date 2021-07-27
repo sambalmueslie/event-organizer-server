@@ -1,9 +1,9 @@
 plugins {
-    id("org.jetbrains.kotlin.jvm") version "1.5.10"
-    id("org.jetbrains.kotlin.kapt") version "1.5.10"
+    id("org.jetbrains.kotlin.jvm") version "1.5.21"
+    id("org.jetbrains.kotlin.kapt") version "1.5.21"
     id("com.github.johnrengelman.shadow") version "6.1.0"
-    id("io.micronaut.application") version "1.5.1"
-    id("org.jetbrains.kotlin.plugin.allopen") version "1.5.10"
+    id("io.micronaut.application") version "2.0.3"
+    id("org.jetbrains.kotlin.plugin.allopen") version "1.5.21"
     id("org.sonarqube") version "3.3"
     jacoco
 }
@@ -52,11 +52,11 @@ dependencies {
     runtimeOnly("ch.qos.logback:logback-classic")
     runtimeOnly("com.fasterxml.jackson.module:jackson-module-kotlin")
 
-    testImplementation("io.mockk:mockk:1.11.0")
+    testImplementation("io.mockk:mockk:1.12.0")
 
-    implementation("com.discord4j:discord4j-core:3.1.5")
-    implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.5.0-native-mt")
-    implementation("org.jetbrains.kotlinx:kotlinx-coroutines-reactor:1.5.0-native-mt")
+    implementation("com.discord4j:discord4j-core:3.1.7")
+    implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.5.1-native-mt")
+    implementation("org.jetbrains.kotlinx:kotlinx-coroutines-reactor:1.5.1-native-mt")
 }
 
 
@@ -64,7 +64,7 @@ application {
     mainClass.set("de.sambalmueslie.ApplicationKt")
 }
 java {
-    sourceCompatibility = JavaVersion.toVersion("14")
+    sourceCompatibility = JavaVersion.toVersion("16")
 }
 
 
@@ -101,12 +101,12 @@ allOpen {
 tasks {
     compileKotlin {
         kotlinOptions {
-            jvmTarget = "14"
+            jvmTarget = "16"
         }
     }
     compileTestKotlin {
         kotlinOptions {
-            jvmTarget = "14"
+            jvmTarget = "16"
         }
     }
 
