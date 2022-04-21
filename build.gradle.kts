@@ -32,7 +32,7 @@ dependencies {
     implementation("io.micronaut:micronaut-runtime")
     implementation("io.micronaut.cache:micronaut-cache-ehcache")
     implementation("io.micronaut.data:micronaut-data-jdbc")
-    compileOnly("jakarta.persistence:jakarta.persistence-api:2.2.2")
+    compileOnly("jakarta.persistence:jakarta.persistence-api:3.1.0")
     implementation("io.micronaut.flyway:micronaut-flyway")
     implementation("io.micronaut.kotlin:micronaut-kotlin-runtime")
     implementation("io.micronaut.security:micronaut-security")
