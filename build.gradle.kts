@@ -56,7 +56,7 @@ dependencies {
 
     implementation("com.discord4j:discord4j-core:3.2.2")
     implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.6.3-native-mt")
-    implementation("org.jetbrains.kotlinx:kotlinx-coroutines-reactor:1.6.1-native-mt")
+    implementation("org.jetbrains.kotlinx:kotlinx-coroutines-reactor:1.6.3-native-mt")
 }
 
 
