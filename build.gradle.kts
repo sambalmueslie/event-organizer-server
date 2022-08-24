@@ -52,7 +52,7 @@ dependencies {
     runtimeOnly("ch.qos.logback:logback-classic")
     runtimeOnly("com.fasterxml.jackson.module:jackson-module-kotlin")
 
-    testImplementation("io.mockk:mockk:1.12.6")
+    testImplementation("io.mockk:mockk:1.12.7")
 
     implementation("com.discord4j:discord4j-core:3.2.3")
     implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.6.3-native-mt")
